@@ -27,6 +27,8 @@
 #include "vpi_interface_pcap.h"
 #include <pcap/pcap.h>
 
+#include "libpcap_version.h"
+
 static const char* pcap_interface_docstring__ =
     "----------------------------------------------------\n"
     "VPI Interface: PCAP \n"
@@ -172,6 +174,16 @@ vpi_pcap_interface_create(vpi_interface_t** vi, char* args[], int flags,
     if(pcap_set_promisc(nvi->pcap, 1) != 0) {
         VPI_WARN(nvi, "pcap_set_promisc() failed.");
     }
+
+    #ifdef LIBPCAP_USE_FIX
+    if(pcap_set_timeout(nvi->pcap, 1) != 0) {
+      VPI_WARN(nvi, "pcap_set_timeout() failed.");
+    }
+
+    if(pcap_set_immediate_mode(nvi->pcap, 1) != 0) {
+      VPI_WARN(nvi, "pcap_set_immediate_mode() failed.");
+    }
+    #endif
 
     if (pcap_activate(nvi->pcap) != 0) {
         VPI_ERROR(nvi, "pcap_activate() failed: %s", pcap_geterr(nvi->pcap));
