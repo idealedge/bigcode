@@ -29,6 +29,12 @@ import os
 # The root of the repository
 ROOT = os.path.realpath("%s/.." % (os.path.dirname(__file__)))
 
+# Allow specification of the target repo by env variable. Default to ROOT
+TARGET_REPO = os.getenv("TARGET_REPO")
+if TARGET_REPO is None:
+    TARGET_REPO = "%s" % ROOT
+
+
 import infra
 
 from modulegen import *
@@ -46,9 +52,9 @@ from uclimod import *
 
 class GModuleUnitTestTargetMake(ModuleUnitTestTargetMake):
     def finalize(self):
-        self.MODULE_DIRS = "$(ROOT)/modules"
+        self.MODULE_DIRS = "$(TARGET_REPO)/modules"
         self.MODULE_UNIT_TEST_DIR = "%s/targets/utests/%s/%s" % (
-            ROOT, self.MODULE_RELATIVE_PATH, self.MODULE_NAME)
+            TARGET_REPO, self.MODULE_RELATIVE_PATH, self.MODULE_NAME)
 
 
 
