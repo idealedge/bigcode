@@ -161,6 +161,7 @@ int main(int argc, char* argv[])
 
     AIM_REFERENCE(argc);
 
+    aim_datatypes_init();
     ucli_init();
     ucli_module_init(&options_module);
     uopts = ucli_create(NULL, &options_module, NULL);
