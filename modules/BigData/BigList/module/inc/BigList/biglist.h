@@ -72,6 +72,13 @@ typedef int (*biglist_iter_f)(void* data, void* cookie);
 biglist_t* biglist_next(biglist_t* ble);
 
 /**
+ * @brief Get the prev element.
+ * @param ble The current element.
+ * @returns The prev element in the list.
+ */
+biglist_t* biglist_prev(biglist_t* ble);
+
+/**
  * @brief Get the final element.
  * @param bl The list.
  * @returns The final element in the list.
